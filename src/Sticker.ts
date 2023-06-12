@@ -20,6 +20,8 @@ export class Sticker {
      */
     constructor(private data: string | Buffer, public metadata: Partial<IStickerOptions> = {}) {
         this.metadata.author = this.metadata.author ?? ''
+        this.metadata.androidapp_link = this.metadata.androidapp_link ?? ''
+        this.metadata.iosapp_link = this.metadata.iosapp_link ?? ''
         this.metadata.pack = this.metadata.pack ?? ''
         this.metadata.id = this.metadata.id ?? Utils.generateStickerID()
         this.metadata.quality = this.metadata.quality ?? 100
@@ -109,6 +111,16 @@ export class Sticker {
      */
     public setAuthor = (author: string): this => {
         this.metadata.author = author
+        return this
+    }
+
+    public setAndroidApp_Link = (androidapp_link: string): this => {
+        this.metadata.androidapp_link = androidapp_link
+        return this
+    }
+
+    public setIosApp_Link = (iosapp_link: string): this => {
+        this.metadata.iosapp_link = iosapp_link
         return this
     }
 
