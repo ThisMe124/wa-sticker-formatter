@@ -48,6 +48,8 @@ import { Sticker, createSticker, StickerTypes } from 'wa-sticker-formatter' // E
 const sticker = new Sticker(image, {
     pack: 'My Pack', // The pack name
     author: 'Me', // The author name
+    androidapp_link: 'https://play.google.com/store/apps/details?id=com.mojang.minecraftpe', // Set a view more android app link
+    iosapp_link: 'https://apps.apple.com/us/app/minecraft/id479516143', // Set a view more ios app link
     type: StickerTypes.FULL, // The sticker type
     categories: ['🤩', '🎉'], // The sticker category
     id: '12345', // The sticker id
