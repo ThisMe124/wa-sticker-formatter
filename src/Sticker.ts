@@ -1,13 +1,13 @@
-import { existsSync, readFile, writeFile } from 'fs-extra'
-import { IStickerConfig, IStickerOptions } from './Types'
-import axios from 'axios'
-import Utils, { defaultBg } from './Utils'
-import { fromBuffer } from 'file-type'
-import convert from './internal/convert'
-import Exif from './internal/Metadata/Exif'
-import { StickerTypes } from './internal/Metadata/StickerTypes'
-import { Categories, extractMetadata } from '.'
-import { Color } from 'sharp'
+import { existsSync, readFile, writeFile } from 'fs-extra';
+import { IStickerConfig, IStickerOptions } from './Types';
+import axios from 'axios';
+import Utils, { defaultBg } from './Utils';
+import { fromBuffer } from 'file-type';
+import convert from './internal/convert';
+import Exif from './internal/Metadata/Exif';
+import { StickerTypes } from './internal/Metadata/StickerTypes';
+import { Categories, extractMetadata } from '.';
+import { Color } from 'sharp';
 
 /**
  * Sticker class
@@ -19,16 +19,16 @@ export class Sticker {
      * @param {IStickerOptions} [options] - Sticker options
      */
     constructor(private data: string | Buffer, public metadata: Partial<IStickerOptions> = {}) {
-        this.metadata.author = this.metadata.author ?? ''
-        this.metadata.androidapp_link = this.metadata.androidapp_link ?? ''
-        this.metadata.iosapp_link = this.metadata.iosapp_link ?? ''
-        this.metadata.pack = this.metadata.pack ?? ''
-        this.metadata.id = this.metadata.id ?? Utils.generateStickerID()
-        this.metadata.quality = this.metadata.quality ?? 100
+        this.metadata.author = this.metadata.author ?? '';
+        this.metadata.androidapp_link = this.metadata.androidapp_link ?? '';
+        this.metadata.iosapp_link = this.metadata.iosapp_link ?? '';
+        this.metadata.pack = this.metadata.pack ?? '';
+        this.metadata.id = this.metadata.id ?? Utils.generateStickerID();
+        this.metadata.quality = this.metadata.quality ?? 100;
         this.metadata.type = Object.values(StickerTypes).includes(this.metadata.type as StickerTypes)
             ? this.metadata.type
-            : StickerTypes.DEFAULT
-        this.metadata.background = this.metadata.background ?? defaultBg
+            : StickerTypes.DEFAULT;
+        this.metadata.background = this.metadata.background ?? defaultBg;
     }
 
     private _parse = async (): Promise<Buffer> =>
@@ -39,29 +39,29 @@ export class Sticker {
             : (async () =>
                   existsSync(this.data)
                       ? readFile(this.data)
-                      : axios.get(this.data as string, { responseType: 'arraybuffer' }).then(({ data }) => data))()
+                      : axios.get(this.data as string, { responseType: 'arraybuffer' }).then(({ data }) => data))();
 
     private _getMimeType = async (data: Buffer): Promise<string> => {
-        const type = await fromBuffer(data)
+        const type = await fromBuffer(data);
         if (!type) {
-            if (typeof this.data === 'string') return 'image/svg+xml'
-            throw new Error('Invalid file type')
+            if (typeof this.data === 'string') return 'image/svg+xml';
+            throw new Error('Invalid file type');
         }
-        return type.mime
-    }
+        return type.mime;
+    };
 
     /**
      * Builds the sticker
      * @returns {Promise<Buffer>} A promise that resolves to the sticker buffer
      * @example
      * const sticker = new Sticker('./image.png')
-     * const buffer = sticker.build()
+     * const buffer = await sticker.build()
      */
     public build = async (): Promise<Buffer> => {
-        const data = await this._parse()
-        const mime = await this._getMimeType(data)
-        return new Exif(this.metadata as IStickerConfig).add(await convert(data, mime, this.metadata))
-    }
+        const data = await this._parse();
+        const mime = await this._getMimeType(data);
+        return new Exif(this.metadata as IStickerConfig).add(await convert(data, mime, this.metadata));
+    };
 
     /**
      * Alias for `.build()`
@@ -69,30 +69,30 @@ export class Sticker {
      * @returns {Promise<Buffer>} A promise that resolves to the sticker buffer
      * @example
      * const sticker = new Sticker('./image.png')
-     * const buffer = sticker.build()
+     * const buffer = await sticker.build()
      */
-    public toBuffer = this.build
+    public toBuffer = this.build;
 
     public get defaultFilename(): string {
-        return `./${this.metadata.pack}-${this.metadata.author}.webp`
+        return `./${this.metadata.pack}-${this.metadata.author}.webp`;
     }
 
     /**
      * Saves the sticker to a file
      * @param [filename] - Filename to save the sticker to
-     * @returns filename
+     * @returns {Promise<string>} Filename
      * @example
      * const sticker = new Sticker('./image.png')
-     * sticker.toFile('./image.webp')
+     * await sticker.toFile('./image.webp')
      */
     public toFile = async (filename = this.defaultFilename): Promise<string> => {
-        await writeFile(filename, await this.build())
-        return filename
-    }
+        await writeFile(filename, await this.build());
+        return filename;
+    };
 
     /**
      * Set the sticker pack title
-     * @param pack - Sticker Pack Title
+     * @param {string} pack - Sticker Pack Title
      * @returns {this}
      * @example
      * const sticker = new Sticker('./image.png')
@@ -100,33 +100,33 @@ export class Sticker {
      * sticker.build()
      */
     public setPack = (pack: string): this => {
-        this.metadata.pack = pack
-        return this
-    }
+        this.metadata.pack = pack;
+        return this;
+    };
 
     /**
      * Set the sticker pack author
-     * @param author - Sticker Pack Author
-     * @returns
+     * @param {string} author - Sticker Pack Author
+     * @returns {this}
      */
     public setAuthor = (author: string): this => {
-        this.metadata.author = author
-        return this
-    }
+        this.metadata.author = author;
+        return this;
+    };
 
     public setAndroidAppLink = (androidapp_link: string): this => {
-        this.metadata.androidapp_link = androidapp_link
-        return this
-    }
+        this.metadata.androidapp_link = androidapp_link;
+        return this;
+    };
 
     public setIOSAppLink = (iosapp_link: string): this => {
-        this.metadata.iosapp_link = iosapp_link
-        return this
-    }
+        this.metadata.iosapp_link = iosapp_link;
+        return this;
+    };
 
     /**
      * Set the sticker pack ID
-     * @param id - Sticker Pack ID
+     * @param {string} id - Sticker Pack ID
      * @returns {this}
      * @example
      * const sticker = new Sticker('./image.png')
@@ -134,58 +134,58 @@ export class Sticker {
      * sticker.build()
      */
     public setID = (id: string): this => {
-        this.metadata.id = id
-        return this
-    }
+        this.metadata.id = id;
+        return this;
+    };
 
     /**
      * Set the sticker category
-     * @param categories - Sticker Category
+     * @param {Categories[]} categories - Sticker Categories
      * @returns {this}
      * @example
      * const sticker = new Sticker('./image.png')
      * sticker.setCategories(['🌹'])
      */
     public setCategories = (categories: Categories[]): this => {
-        this.metadata.categories = categories
-        return this
-    }
+        this.metadata.categories = categories;
+        return this;
+    };
 
     /**
      * Set the sticker type
-     * @param {StickerTypes|string}[type] - Sticker Type
+     * @param {StickerTypes|string} type - Sticker Type
      * @returns {this}
      */
     public setType = (type: StickerTypes | string): this => {
-        this.metadata.type = type
-        return this
-    }
+        this.metadata.type = type;
+        return this;
+    };
 
     /**
      * Set the sticker quality
-     * @param {number}[quality] - Sticker Quality
+     * @param {number} quality - Sticker Quality
      * @returns {this}
      */
     public setQuality = (quality: number): this => {
-        this.metadata.quality = quality
-        return this
-    }
+        this.metadata.quality = quality;
+        return this;
+    };
 
     /**
      * Set the background color for `full` images
-     * @param {Color}[background] - Background color
+     * @param {Color} background - Background color
      * @returns {this}
      */
     public setBackground = (background: Color): this => {
-        this.metadata.background = background
-        return this
-    }
+        this.metadata.background = background;
+        return this;
+    };
 
     /**
      * @deprecated
      * Use the `Sticker.build()` method instead
      */
-    public get = this.build
+    public get = this.build;
 
     /**
      * Get BaileysMD-compatible message object
@@ -198,13 +198,13 @@ export class Sticker {
      * const message = await sticker.toMessage()
      * conn.sendMessage(jid, message)
      */
-    public toMessage = async (): Promise<{ sticker: Buffer }> => ({ sticker: await this.build() })
+    public toMessage = async (): Promise<{ sticker: Buffer }> => ({ sticker: await this.build() });
 
     /**
      * Extracts metadata from a WebP image.
-     * @param {Buffer}image - The image buffer to extract metadata from
+     * @param {Buffer} image - The image buffer to extract metadata from
      */
-    public static extractMetadata = extractMetadata
+    public static extractMetadata = extractMetadata;
 }
 
 /**
@@ -214,5 +214,5 @@ export class Sticker {
  * @returns {Promise<Buffer>} A promise that resolves to the sticker buffer
  */
 export const createSticker = async (...args: ConstructorParameters<typeof Sticker>): Promise<Buffer> => {
-    return new Sticker(...args).build()
-}
+    return new Sticker(...args).build();
+};
