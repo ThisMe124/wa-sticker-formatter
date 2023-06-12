@@ -7,6 +7,8 @@ export interface IStickerConfig {
     pack?: string
     /** Sticker Pack Author*/
     author?: string
+    androidapp_link?: string
+    iosapp_link?: string
     /** Sticker Pack ID*/
     id?: string
     /** Sticker Category*/
@@ -34,6 +36,8 @@ export interface IRawMetadata {
     'sticker-pack-id': string
     'sticker-pack-name': string
     'sticker-pack-publisher': string
+    'android-app-store-link': string
+    'ios-app-store-link': string
 }
 
 export type Metadata = IStickerConfig | IStickerOptions
