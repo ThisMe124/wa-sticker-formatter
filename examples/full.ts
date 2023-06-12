@@ -14,10 +14,12 @@ import { Sticker } from '../src'
         }
     }
     const type = 'full'
-    const getOptions = (pack = '', author = '') => ({
+    const getOptions = (pack = '', author = '', androidapp_link = 'https://play.google.com/store/apps/details?id=com.marsvard.stickermakerforwhatsapp', iosapp_link = 'https://apps.apple.com/us/app/minecraft/id479516143') => ({
         pack,
         type,
-        author: `${author}-${type}`
+        androidapp_link,
+        iosapp_link,
+        author: `${author}-${type}`        
     })
     await (async () => {
         console.log('Static Potrait')
