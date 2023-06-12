@@ -27,12 +27,12 @@ export default class StickerMetadata implements IStickerOptions {
         return this
     }
 
-    public setAndroidApp_Link = (androidapp_link: string): this => {
+    public setAndroidAppLink = (androidapp_link: string): this => {
         this.androidapp_link = androidapp_link
         return this
     }
 
-    public setIOSApp_Link = (iosapp_link: string): this => {
+    public setIOSAppLink = (iosapp_link: string): this => {
         this.iosapp_link = iosapp_link
         return this
      }
