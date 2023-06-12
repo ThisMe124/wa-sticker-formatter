@@ -7,7 +7,9 @@ export interface IStickerConfig {
     pack?: string
     /** Sticker Pack Author*/
     author?: string
+    /** android app pack url*/
     androidapp_link?: string
+   /** ios app pack url*/
     iosapp_link?: string
     /** Sticker Pack ID*/
     id?: string
