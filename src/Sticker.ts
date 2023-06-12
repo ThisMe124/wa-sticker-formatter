@@ -114,12 +114,12 @@ export class Sticker {
         return this
     }
 
-    public setAndroidApp_Link = (androidapp_link: string): this => {
+    public setAndroidAppLink = (androidapp_link: string): this => {
         this.metadata.androidapp_link = androidapp_link
         return this
     }
 
-    public setIOSApp_Link = (iosapp_link: string): this => {
+    public setIOSAppLink = (iosapp_link: string): this => {
         this.metadata.iosapp_link = iosapp_link
         return this
     }
