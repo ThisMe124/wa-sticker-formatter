@@ -14,7 +14,7 @@ import { Sticker } from '../src'
         }
     }
     const type = 'full'
-    const getOptions = (pack = '', author = '', androidapp_link = 'https://play.google.com/store/apps/details?id=com.marsvard.stickermakerforwhatsapp', iosapp_link = 'https://apps.apple.com/us/app/minecraft/id479516143') => ({
+    const getOptions = (pack = '', author = '', androidapp_link = 'https://play.google.com/store/apps/details?id=com.marsvard.stickermakerforwhatsapp', iosapp_link = 'https://itunes.apple.com/app/sticker-maker-studio/id1443326857') => ({
         pack,
         type,
         androidapp_link,
