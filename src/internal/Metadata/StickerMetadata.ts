@@ -7,12 +7,14 @@ export default class StickerMetadata implements IStickerOptions {
     constructor(
         public pack = '',
         public author = '',
+        public androidapp_link = '',
+        public iosapp_link = '',
         public categories: Categories[] = [],
         public id = Utils.generateStickerID()
     ) {}
 
     static from = (object: Partial<StickerMetadata>): StickerMetadata => {
-        return new StickerMetadata(object.pack, object.author, object.categories, object.id)
+        return new StickerMetadata(object.pack, object.author, object.androidapp_link, object.iosapp_link, object.categories, object.id)
     }
 
     public setPack = (title: string): this => {
@@ -24,6 +26,16 @@ export default class StickerMetadata implements IStickerOptions {
         this.author = author
         return this
     }
+
+    public setAndroidApp_Link = (androidapp_link: string): this => {
+        this.androidapp_link = androidapp_link
+        return this
+    }
+
+    public setIOSApp_Link = (iosapp_link: string): this => {
+        this.iosapp_link = iosapp_link
+        return this
+     }
 
     public setId = (id: string): this => {
         this.id = id
