@@ -119,7 +119,7 @@ export class Sticker {
         return this
     }
 
-    public setIosApp_Link = (iosapp_link: string): this => {
+    public setIOSApp_Link = (iosapp_link: string): this => {
         this.metadata.iosapp_link = iosapp_link
         return this
     }
