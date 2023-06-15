@@ -110,6 +110,10 @@ interface IStickerConfig {
     pack?: string
     /** Sticker Pack Author*/
     author?: string
+    /** Android link view More*/
+    androidapp_link?: string
+    /** IOS link view More*/
+    iosapp_link?: string
     /** Sticker Pack ID*/
     id?: string
     /** Sticker Category*/
