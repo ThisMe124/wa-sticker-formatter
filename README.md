@@ -66,7 +66,7 @@ conn.sendMessage(jid, await sticker.toMessage())
 
 ```
 
-You can also chain methods like this ( broken for now 🤡🤡):
+You can also chain methods like this ( broken for now 🤡🤡 ):
 
 ```TS
 const buffer = await new Sticker(image)
