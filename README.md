@@ -34,6 +34,9 @@ The paramers are the same for both.
 `id` - The sticker id. If this property is not defined, it will be generated.<br>
 `background` - Background color in hexadecimal format or an RGBA Object. Defaults to undefined (transparent).<br>
 
+## Update 
+- Added Custom Android and IOS Link view more ( not really important just for myself ) 
+
 ## Import
 
 Before using the library, you need to import it.
